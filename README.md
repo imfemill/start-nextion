@@ -15,8 +15,8 @@ graph TD
     C1 --> C1a[layout.tsx]
     C1 --> C1b[page.tsx]
     C1 --> C1c[(routes)]
-    C1 --> C1c[(auth)]
-    C1 --> C1d[api/]
+    C1 --> C1d[(auth)]
+    C1 --> C1e[api/]
     
     C --> C2[components/]
     C --> C3[features/]
