@@ -29,8 +29,8 @@ graph TD
     C --> C10[store/]
     C --> C11[config/]
     C --> C12[middleware.ts]
-
-
+```
+---
 ## 🧭 Explanation
 
 - **`public/`** – Static assets like images, icons, or `robots.txt`.
