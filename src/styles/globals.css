@@ -1,0 +1,21 @@
+/* The file imports Tailwind CSS, which is likely used for utility-first styling. */
+@import "tailwindcss";
+
+@theme {
+   --color-primary: #f37438;
+   --color-primaryDark: #de500d;
+   --color-primarySoft: #fbd1bd;
+   
+   --color-secondary: #3b7080;
+   --color-secondaryDark: #2e5864;
+   --color-secondarySoft: #b9cbd1;
+
+   --color-white: #ffffff;
+   --color-light: #e5e7eb;
+   --color-textColor: "#111827";
+   --color-purple: #3f3cbb;
+   --color-midnight: #121063;
+   --color-tahiti: #3ab7bf;
+   --color-bermuda: #78dcca;
+}
+

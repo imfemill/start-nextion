@@ -33,9 +33,10 @@ const eslintConfig = [
             'react/jsx-uses-react': 'off',
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'warn'
-        }
+        },
+        ignores: [".next", "node_modules", "public", "build", "dist"], // ignore these directories
     },
-    ...compat.extends('next/core-web-vitals', 'next/typescript')
+    ...compat.extends('next/core-web-vitals', 'next/typescript'),
 ];
 
 export default eslintConfig;
