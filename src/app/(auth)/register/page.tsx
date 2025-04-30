@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function Register() {
     /* 
     const router = useRouter();
@@ -23,12 +25,9 @@ export default function Register() {
     */
 
     return (
-        <main className="p-5 h-screen">
-            <section className="bg-light h-full p-5">
-                <div className="p-5 gap-5 flex flex-col">
-                    <h1 className="text-2xl font-bold text-primaryDark">Register</h1>
-                </div>
-            </section>
-        </main>
+        <section className="relative h-screen w-full">
+            <div>Register</div>
+            <Image src={'/auth.png'} alt="Profile" height={100} width={100} />
+        </section>
     );
 }

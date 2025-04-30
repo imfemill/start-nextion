@@ -4,18 +4,13 @@ import { sidebarStructure } from '@/routes/structure';
 import { ChevronLeftIcon, ChevronRightIcon, ComponentIcon, HomeIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { FC, JSX, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { FC, JSX, useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
 interface SidebarProps {
     setExpand: (value: boolean) => void;
-}
-
-interface MenuState {
-    open: boolean;
-    height: string;
 }
 
 interface SidebarItem {
@@ -33,12 +28,35 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
     const company = 'Femil & Smit';
     const link = '/';
     const router = useRouter();
-    const [openedMenu, setOpenedMenu] = useState<Record<string, MenuState>>({});
+    const pathname = usePathname(); // Get the current path
+
+    const [openedMenu, setOpenedMenu] = useState<Record<string, boolean>>({});
     const [activeName, setActiveName] = useState('');
     const [isExpand, setIsExpand] = useState(true);
     const [isExpandOnHover, setIsExpandOnHover] = useState(false);
 
-    const listRef = useRef<Record<string, HTMLUListElement | null>>({});
+    useEffect(() => {
+        // Set the active link based on the current pathname
+        const findActiveItem = (items: SidebarItem[]): string | null => {
+            for (const item of items) {
+                if (item.link === pathname) {
+                    return item.name;
+                }
+                if (item.child) {
+                    const activeChild = findActiveItem(item.child);
+                    if (activeChild) {
+                        return activeChild;
+                    }
+                }
+            }
+            return null;
+        };
+
+        const activeItemName = findActiveItem(sidebarStructure);
+        if (activeItemName) {
+            setActiveName(activeItemName);
+        }
+    }, [pathname]); // Run this effect whenever the pathname changes
 
     const handleHoverExpand = (value: boolean) => {
         if (!isExpand) setIsExpandOnHover(value);
@@ -52,20 +70,10 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
     };
 
     const handleToggle = (name: string) => {
-        const rootEl = name.split('.')[0];
-        setOpenedMenu((prevState) => {
-            const isOpen = !prevState[name]?.open;
-            const newHeight = !isOpen ? '0px' : `${listRef.current[name]?.scrollHeight || 0}px`;
-
-            return {
-                ...prevState,
-                [name]: { open: !isOpen, height: newHeight },
-                [rootEl]: {
-                    open: isOpen,
-                    height: newHeight
-                }
-            };
-        });
+        setOpenedMenu((prevState) => ({
+            ...prevState,
+            [name]: !prevState[name]
+        }));
     };
 
     const generateIcon = (icon: string) => {
@@ -76,83 +84,87 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         return iconsMap[icon] || null;
     };
 
-    const generateMenu = (item: SidebarItem, index: number, recursive = 0) => {
-        const isActive = activeName === item.name || activeName.split('.')[0] === item.name;
-        const classesActive = activeName === item.name ? 'active text-blue-600 font-semibold' : '';
-        // const classesActive = isActive ? 'text-blue-600 font-semibold' : 'text-slate-500';
+    const generateMenu = (item: SidebarItem, recursive = 0) => {
+        // Helper function to check if the current item or any of its children is active
+        const isItemActive = (currentItem: SidebarItem): boolean => {
+            if (activeName === currentItem.name) return true;
+            if (currentItem.child) {
+                return currentItem.child.some(isItemActive);
+            }
+            return false;
+        };
+
+        const isActive = isItemActive(item); // Check if the current item or its children are active
+        const isOpen = openedMenu[item.name]; /*  || isActive */ // Open the menu if it's active
 
         return (
-            <li key={index}>
-                {
-                    <Link
-                        role="button"
-                        tabIndex={0}
-                        id={item.id}
-                        href={item.link || '#'}
-                        onClick={() =>
-                            'child' in item
-                                ? handleToggle(item.name)
-                                : handleNavigate(item.name, item.link)
-                        }
-                        onKeyDown={(event) => {
-                            if (event.code === 'Space') {
-                                void ('child' in item
-                                    ? handleToggle(item.name)
-                                    : handleNavigate(item.name, item.link));
+            <li key={item.id}>
+                <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() =>
+                        item.child ? handleToggle(item.name) : handleNavigate(item.name, item.link)
+                    }
+                    onKeyDown={(event) => {
+                        if (event.code === 'Space') {
+                            if (item.child) {
+                                handleToggle(item.name);
+                            } else {
+                                handleNavigate(item.name, item.link);
                             }
-                        }}
-                        className={[
-                            'group flex items-center justify-between h-10 py-0 pr-3 mb-1 rounded-md cursor-pointer focus:outline-none',
-                            recursive === 0 ? 'pl-[18px]' : recursive === 1 ? 'pl-11' : 'pl-16',
-                            isActive
-                                ? 'text-blue-600 font-semibold hover:bg-slate-300/20'
-                                : 'hover:bg-slate-300/20',
-                            isActive && item.parent ? 'bg-blue-100/50' : ''
-                        ].join(' ')}
-                    >
-                        <div className="flex items-center gap-3">
-                            {item.icon ? (
-                                item.icon === 'dot' ? (
-                                    <div className="h-3 w-3 flex items-center justify-center">
-                                        <div
-                                            className={[
-                                                `${classesActive ? 'h-2 w-2' : 'h-1 w-1'}`,
-                                                'bg-current rounded-full transition duration-200'
-                                            ].join(' ')}
-                                        ></div>
-                                    </div>
-                                ) : (
-                                    generateIcon(item.icon)
-                                )
-                            ) : null}
-                            <span
-                                className={`truncate ${
-                                    isExpand || isExpandOnHover ? '' : 'w-0 h-0 opacity-0'
-                                }`}
-                            >
-                                {item.title}
-                            </span>
-                        </div>
-                        {'child' in item && (
-                            <ChevronRightIcon
-                                className={`transform transition duration-300 ${
-                                    openedMenu[item.name]?.open ? 'rotate-270' : 'rotate-90'
-                                }`}
-                                size={16}
-                                strokeWidth={1}
-                            />
-                        )}
-                    </Link>
-                }
-                {'child' in item && (isExpand || isExpandOnHover) && (
+                        }
+                    }}
+                    className={[
+                        'group flex items-center justify-between h-10 py-0 pr-3 mb-1 rounded-md cursor-pointer focus:outline-none',
+                        recursive === 0 ? 'pl-[18px]' : recursive === 1 ? 'pl-11' : 'pl-16',
+                        isActive
+                            ? `text-neutral-900 font-semibold ${
+                                  item.parent ? 'bg-neutral-200 ' : 'bg-transparent'
+                              }`
+                            : `text-neutral-800 ${item.parent && ''}`,
+                        'hover:bg-neutral-300/20'
+                    ].join(' ')}
+                >
+                    <div className="flex items-center gap-2">
+                        {item.icon ? (
+                            item.icon === 'dot' ? (
+                                <div className="h-3 w-3 flex items-center justify-center">
+                                    <div
+                                        className={[
+                                            `${isActive ? 'h-2 w-2' : 'h-1 w-1'}`,
+                                            'bg-current rounded-full transition duration-200'
+                                        ].join(' ')}
+                                    ></div>
+                                </div>
+                            ) : (
+                                generateIcon(item.icon)
+                            )
+                        ) : null}
+                        <span
+                            className={`truncate ${
+                                isExpand || isExpandOnHover ? 'h-4.5' : 'w-0 h-0 opacity-0'
+                            }`}
+                        >
+                            {item.title}
+                        </span>
+                    </div>
+                    {item.child && (
+                        <ChevronRightIcon
+                            className={`transform transition duration-300 ${
+                                isOpen ? 'rotate-270' : 'rotate-90'
+                            }`}
+                            size={16}
+                            strokeWidth={1}
+                        />
+                    )}
+                </div>
+                {item.child && (isExpand || isExpandOnHover) && (
                     <ul
-                        ref={(el) => {
-                            listRef.current[item.name] = el;
-                        }}
-                        className="transition-max-height overflow-hidden duration-300 ease-in-out"
-                        style={{ maxHeight: `${openedMenu[item.name]?.height || '0px'}` }}
+                        className={`transition-max-height overflow-hidden duration-300 ease-in-out ${
+                            isOpen ? 'max-h-screen' : 'max-h-0'
+                        }`}
                     >
-                        {item.child?.map((child, idx) => generateMenu(child, idx, recursive + 1))}
+                        {item.child.map((child) => generateMenu(child, recursive + 1))}
                     </ul>
                 )}
             </li>
@@ -163,7 +175,7 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         <nav
             role="navigation"
             className={[
-                'bg-slate-50 border-r border-slate-100 shadow-sm absolute inset-y-0 left-0 transition-all duration-300 ease-in-out md:fixed',
+                'bg-slate-50 border-r border-slate-100 shadow-sm absolute inset-y-0 left-0 transition-all duration-300 ease-in-out md:fixed z-[999]',
                 isExpand ? 'w-64' : isExpandOnHover ? 'w-64 backdrop-blur-md' : 'w-20'
             ].join(' ')}
         >
@@ -224,7 +236,7 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
                         </div>
                         <div className="mt-3 mb-10 p-0 leading-10">
                             <ul className="list-none text-sm font-normal px-3">
-                                {sidebarStructure.map((item, index) => generateMenu(item, index))}
+                                {sidebarStructure.map((item) => generateMenu(item))}
                             </ul>
                         </div>
                     </div>

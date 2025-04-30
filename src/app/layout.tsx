@@ -15,8 +15,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning dir="ltr">
-            <body className={`antialiased`} cz-shortcut-listen="true" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning={true} dir="ltr">
+            <body className={`antialiased`} cz-shortcut-listen="true">
                 <ConfigProvider
                     theme={{
                         token: {
