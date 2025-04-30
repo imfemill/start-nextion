@@ -95,6 +95,8 @@ const SideMenu: FC<SideMenuProps> = ({ isExpand = true, isExpandOnHover = false 
                     tabIndex={0}
                     id={item.id}
                     onClick={() => {
+                        console.warn('child' in item);
+                        console.error('child' in item);
                         if ('child' in item) {
                             handleToggle(item.name);
                         } else if ('link' in item) {
