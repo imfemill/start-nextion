@@ -3,6 +3,10 @@ import '@/styles/globals.css'; // your Tailwind CSS
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import '@ant-design/v5-patch-for-react-19';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
 import { ConfigProvider } from 'antd';
 import React from 'react';
 
