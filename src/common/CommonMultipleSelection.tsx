@@ -97,10 +97,11 @@ const CommonMultipleSelection: React.FC<CommonMultipleSelectionProps> = ({
             ...provided,
             width: '100%',
             borderRadius: 0.375 + 'rem',
-            border: state.isFocused ? '1px solid #f37438' : '1px solid #ccc',
+            fontSize: '0.875rem',
+            border: state.isFocused ? '1px solid #a1a1a1' : '1px solid #ccc',
             boxShadow: 'none',
             ':hover': {
-                border: state.isFocused ? '1px solid #f37438' : '1px solid #f3743890'
+                border: state.isFocused ? '1px solid #a1a1a1' : '1px solid #ccc'
             },
             ':active': {
                 border: state.isFocused ? '1px solid #f37438' : '1px solid #f3743890'
@@ -137,7 +138,7 @@ const CommonMultipleSelection: React.FC<CommonMultipleSelectionProps> = ({
         }),
         multiValue: (provided, state) => ({
             ...provided,
-            backgroundColor: state.data ? '#f3743850' : '#f3743890'
+            backgroundColor: state.data ? 'lightgray' : '#f3743890'
         })
     };
 

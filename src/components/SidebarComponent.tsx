@@ -175,12 +175,12 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         <nav
             role="navigation"
             className={[
-                'bg-slate-50 border-r border-slate-100 shadow-sm absolute inset-y-0 left-0 transition-all duration-300 ease-in-out md:fixed z-[999]',
+                'bg-neutral-50  border-r border-slate-100 shadow-sm absolute inset-y-0 left-0 transition-all duration-300 ease-in-out md:fixed z-[999]',
                 isExpand ? 'w-64' : isExpandOnHover ? 'w-64 backdrop-blur-md' : 'w-20'
             ].join(' ')}
         >
             <button
-                className="absolute z-50 top-10 -right-3 bg-white hover:bg-slate-100 text-slate-500 p-0.5 rounded-full border border-slate-200 cursor-pointer"
+                className="absolute z-50 top-4 -right-3 bg-white hover:bg-slate-100 text-slate-500 p-0.5 rounded-full border border-slate-200 cursor-pointer"
                 onClick={() => {
                     setIsExpand(!isExpand);
                     setExpand(!isExpand);
@@ -209,7 +209,7 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
                             <Link
                                 href={link}
                                 className={`flex items-center rounded-md w-full h-20 duration-300 ${
-                                    isExpand || isExpandOnHover ? 'bg-slate-300/25 px-4 gap-3' : ''
+                                    isExpand || isExpandOnHover ? 'bg-neutral-100 px-4 gap-3' : ''
                                 }`}
                             >
                                 <div className="rounded-full overflow-hidden h-10 w-10 shrink-0 drop-shadow-2xl border">

@@ -5,7 +5,6 @@ import React from 'react';
 const Buttons = () => {
     return (
         <section>
-            <h1 className="text-2xl font-bold text-primaryDark">Buttons</h1>
             <div className="flex flex-col items-start gap-5 w-7xl">
                 <div className="flex gap-5 w-full">
                     <CommonButton type={PRIMARY}>Primary Button</CommonButton>

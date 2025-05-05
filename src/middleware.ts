@@ -6,8 +6,7 @@ export function middleware(request: NextRequest) {
     const path = request?.nextUrl?.pathname;
     const token = request.cookies.get('master-key')?.value || '';
 
-    const isPublicPath = (path: string) =>
-        path === '/' || path === '/login' || path === '/register';
+    const isPublicPath = (path: string) => publicRoute.includes(path);
 
     if (isPublicPath(path) && token) {
         return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
@@ -32,4 +31,4 @@ export const config = {
     ]
 };
 
-export const publicRoute = ['/', '/login', '/register'];
+export const publicRoute = ['/', '/login', '/register', '/forgot-password'];

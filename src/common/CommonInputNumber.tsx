@@ -29,7 +29,7 @@ const CommonInputNumberField: React.FC<CommonInputNumberFieldProps> = ({
             onBlur={onBlur}
             placeholder={placeholder}
             className={`
-                bg-white border border-light rounded-md focus-visible:outline-none 
+                bg-white border border-light focus-within:border-neutral-400 rounded-md focus-visible:outline-none 
                 text-gray-900 text-sm rounded-input block w-full py-2 px-2.5 h-[38px] 
                 placeholder:text-gray-400
              `}

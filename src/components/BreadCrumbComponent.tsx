@@ -42,7 +42,7 @@ const BreadCrumbComponent: React.FC = () => {
 
     const breadcrumbItems = generateBreadcrumbItems(pathname);
 
-    return <Breadcrumb items={breadcrumbItems} className="!mx-2 !mt-1" />;
+    return <Breadcrumb items={breadcrumbItems} />;
 };
 
 export default BreadCrumbComponent;

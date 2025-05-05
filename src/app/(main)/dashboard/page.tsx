@@ -1,11 +1,7 @@
 'use client';
 
 const Dashboard = () => {
-    return (
-        <section>
-            <h1 className="text-2xl font-bold text-primaryDark">Dashboard</h1>
-        </section>
-    );
+    return <section></section>;
 };
 
 export default Dashboard;

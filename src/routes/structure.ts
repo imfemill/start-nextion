@@ -25,7 +25,7 @@ const sidebarStructure = [
                 id: 'forms',
                 title: 'Forms',
                 name: 'components.forms',
-                // link: '/components/forms',
+                link: '/components/forms',
                 icon: 'dot',
                 parent: true,
                 child: [
@@ -35,13 +35,6 @@ const sidebarStructure = [
                         name: 'components.forms.form-elements',
                         link: '/components/forms/form-elements',
                         icon: 'dot'
-                    },
-                    {
-                        id: 'form-layouts',
-                        title: 'Form Layouts',
-                        name: 'components.forms.form-layouts',
-                        link: '/components/forms/form-layouts',
-                        icon: 'dot'
                     }
                 ]
             },
@@ -50,6 +43,13 @@ const sidebarStructure = [
                 title: 'ANT Design',
                 name: 'components.antd',
                 link: '/components/antd',
+                icon: 'dot'
+            },
+            {
+                id: 'tables',
+                title: 'Tables',
+                name: 'components.tables',
+                link: '/components/tables',
                 icon: 'dot'
             }
         ]

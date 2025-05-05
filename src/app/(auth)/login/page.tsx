@@ -1,19 +1,22 @@
 'use client';
 
 // import required modules
-import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next/client';
 import { Form, Formik } from 'formik';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
 
 // Components and Constants
 import { PRIMARY } from '@/lib/constants';
 import CommonButton from '@/common/CommonButton';
+import CommonTextLink from '@/common/CommonTextLink';
 import CommonCheckbox from '@/common/CommonCheckbox';
 import CommonInputField from '@/common/CommonInputString';
 
 const Login = () => {
+    const router = useRouter();
     return (
         <section>
             <div className="md:max-w-4xl w-full flex flex-col flex-wrap md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-neutral-200 rounded-xs bg-white shadow-[0px_2px_30px_#ccc6]">
@@ -35,9 +38,11 @@ const Login = () => {
                         initialValues={{ email: '', password: '' }}
                         onSubmit={(values) => {
                             console.warn(values);
+                            setCookie('master-key', values.email);
+                            router.push('/dashboard');
                         }}
                     >
-                        {({ handleSubmit }) => (
+                        {({ handleSubmit, handleChange, handleBlur }) => (
                             <Form onSubmit={handleSubmit} noValidate>
                                 <div className="space-y-4">
                                     <div>
@@ -55,9 +60,9 @@ const Login = () => {
                                                 disabled: false,
                                                 defaultValue: ''
                                             }}
-                                            onChange={() => {}}
+                                            onChange={handleChange}
                                             onFocus={() => {}}
-                                            onBlur={() => {}}
+                                            onBlur={handleBlur}
                                         />
                                     </div>
                                     <div>
@@ -76,9 +81,9 @@ const Login = () => {
                                                 disabled: false,
                                                 defaultValue: ''
                                             }}
-                                            onChange={() => {}}
+                                            onChange={handleChange}
                                             onFocus={() => {}}
-                                            onBlur={() => {}}
+                                            onBlur={handleBlur}
                                         />
                                     </div>
                                 </div>
@@ -99,12 +104,9 @@ const Login = () => {
                                         />
                                     </div>
                                     <div className="text-sm">
-                                        <a
-                                            href="#"
-                                            className="font-medium text-primary hover:text-primaryDark"
-                                        >
+                                        <CommonTextLink href="/forgot-password">
                                             Forgot your password?
-                                        </a>
+                                        </CommonTextLink>
                                     </div>
                                 </div>
                                 <div className="w-full">
@@ -118,12 +120,7 @@ const Login = () => {
                     <div className="flex items-center justify-between mt-2">
                         <div className="text-sm">{`Don't have an account?`}</div>
                         <div className="text-sm">
-                            <Link
-                                href="/register"
-                                className="font-medium text-primary hover:text-primaryDark"
-                            >
-                                Register now
-                            </Link>
+                            <CommonTextLink href="/register">Register now</CommonTextLink>
                         </div>
                     </div>
                 </div>

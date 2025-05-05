@@ -32,10 +32,11 @@ const CommonInputField: React.FC<CommonInputFieldProps> = ({
                 onFocus={onFocus}
                 onBlur={onBlur}
                 placeholder={placeholder}
+                autoComplete="off"
                 className={`
             bg-white border border-light rounded-md focus-visible:outline-none 
             text-gray-900 text-sm rounded-input block w-full py-2 px-2.5 h-[38px] 
-            placeholder:text-gray-400
+            placeholder:text-gray-400 focus-within:border-neutral-400
             ${type === 'password' ? 'pe-10' : ''}
             `}
             />

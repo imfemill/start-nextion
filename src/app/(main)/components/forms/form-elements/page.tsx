@@ -12,7 +12,6 @@ import CommonTextArea from '@/common/CommonTextArea';
 const Dashboard = () => {
     return (
         <section>
-            <h1 className="text-2xl font-bold text-primaryDark">Forms</h1>
             <div className="grid grid-cols-4">
                 <div className="flex flex-col items-start bg-white border border-light">
                     <div className="border border-light w-full p-3">

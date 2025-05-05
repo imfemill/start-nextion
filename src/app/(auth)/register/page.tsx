@@ -3,13 +3,13 @@
 // import required modules
 import { Form, Formik } from 'formik';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Components and Constants
 import CommonButton from '@/common/CommonButton';
 import CommonInputField from '@/common/CommonInputString';
+import CommonTextLink from '@/common/CommonTextLink';
 import { PRIMARY } from '@/lib/constants';
 
 const Register = () => {
@@ -101,7 +101,7 @@ const Register = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="w-full">
+                                <div className="w-full mt-6">
                                     <CommonButton type={PRIMARY} buttonType="submit">
                                         Register
                                     </CommonButton>
@@ -112,12 +112,7 @@ const Register = () => {
                     <div className="flex items-center justify-between mt-2">
                         <div className="text-sm">{`Already have an account?`}</div>
                         <div className="text-sm">
-                            <Link
-                                href="/login"
-                                className="font-medium text-primary hover:text-primaryDark"
-                            >
-                                Sign in now
-                            </Link>
+                            <CommonTextLink href="/login">Sign in now</CommonTextLink>
                         </div>
                     </div>
                 </div>
@@ -142,7 +137,7 @@ const Register = () => {
                     >
                         <SwiperSlide>
                             <Image
-                                src="/images/auth-secure-Register.png"
+                                src="/images/auth-secure-login.png"
                                 alt="Secure Access Control"
                                 sizes="100vw"
                                 width={512}
