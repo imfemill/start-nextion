@@ -5,13 +5,12 @@ const capitalizeSlug = (slug: string): string => {
     return slug.charAt(0).toUpperCase() + slug.slice(1);
 };
 
-interface BlogProps {
-    params: { slug: string };
-    searchParams?: { [key: string]: string | string[] | undefined };
-}
-
 // Generate metadata dynamically based on the slug
-export async function generateMetadata({ params }: BlogProps): Promise<Metadata> {
+export async function generateMetadata({
+    params
+}: {
+    params: { slug: string };
+}): Promise<Metadata> {
     const { slug } = params;
 
     return {

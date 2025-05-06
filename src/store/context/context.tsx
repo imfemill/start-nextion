@@ -41,6 +41,7 @@ const Context = () => {
                 );
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Empty dependency array ensures this effect runs only once on component mount
 
     // Return an empty fragment as this component doesn't render any UI
