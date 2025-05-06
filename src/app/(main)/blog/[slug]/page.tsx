@@ -5,12 +5,7 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-interface BlogProps {
-    params: { slug: string };
-    searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-const Blog: React.FC<BlogProps> = () => {
+const Blog: React.FC = () => {
     const params = useParams();
     const dispatch = useDispatch();
 
