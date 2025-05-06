@@ -3,14 +3,19 @@
 // import required modules
 import { Form, Formik } from 'formik';
 import Image from 'next/image';
+import * as yup from 'yup';
 
 // Components and Constants
 import CommonButton from '@/common/CommonButton';
 import CommonInputField from '@/common/CommonInputString';
 import CommonTextLink from '@/common/CommonTextLink';
 import { PRIMARY } from '@/lib/constants';
+import { errorToast } from '@/lib/toast';
+import { useRouter } from 'next/navigation';
+import { forgotPasswordSchema } from '../_schemas/forgotPasswordSchema';
 
 const ForgotPassword = () => {
+    const router = useRouter();
     return (
         <section>
             <div className="md:w-2xl w-full flex flex-col flex-wrap md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-neutral-200 rounded-xs bg-white shadow-[0px_2px_30px_#ccc6]">
@@ -34,42 +39,66 @@ const ForgotPassword = () => {
                         </p>
                     </div>
                     <Formik
-                        initialValues={{ email: '' }}
-                        onSubmit={(values) => {
-                            console.warn(values);
+                        enableReinitialize={true}
+                        initialValues={{
+                            email: ''
                         }}
+                        onSubmit={() => {
+                            router.push('/login');
+                        }}
+                        validationSchema={forgotPasswordSchema}
                     >
-                        {({ handleSubmit }) => (
-                            <Form onSubmit={handleSubmit} noValidate>
-                                <div className="space-y-4">
-                                    <div>
-                                        <label
-                                            htmlFor="email"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Email
-                                        </label>
-                                        <CommonInputField
-                                            inputAttributes={{
-                                                placeholder: 'Enter your text here',
-                                                id: 'email',
-                                                name: 'email',
-                                                disabled: false,
-                                                defaultValue: ''
-                                            }}
-                                            onChange={() => {}}
-                                            onFocus={() => {}}
-                                            onBlur={() => {}}
-                                        />
+                        {({ handleSubmit, handleChange, handleBlur, values, errors }) => {
+                            return (
+                                <Form onSubmit={handleSubmit} noValidate>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label
+                                                htmlFor="email"
+                                                className="block text-sm font-medium text-gray-700"
+                                            >
+                                                Email
+                                            </label>
+                                            <CommonInputField
+                                                inputAttributes={{
+                                                    placeholder: 'Enter your text here',
+                                                    id: 'email',
+                                                    name: 'email',
+                                                    disabled: false,
+                                                    value: values?.email
+                                                }}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                onFocus={handleBlur}
+                                            />
+                                        </div>
+                                        <div className="w-full">
+                                            <CommonButton
+                                                type={PRIMARY}
+                                                buttonType="button"
+                                                handleClick={async () => {
+                                                    try {
+                                                        // Validate the email using the yup schema
+                                                        await yup
+                                                            .string()
+                                                            .email('Invalid email format')
+                                                            .required('Email is required')
+                                                            .validate(values.email);
+                                                    } catch {
+                                                        // If validation fails, show the error toast
+                                                        errorToast(
+                                                            errors.email || 'Invalid email format'
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                Submit
+                                            </CommonButton>
+                                        </div>
                                     </div>
-                                    <div className="w-full mt-2">
-                                        <CommonButton type={PRIMARY} buttonType="submit">
-                                            Submit
-                                        </CommonButton>
-                                    </div>
-                                </div>
-                            </Form>
-                        )}
+                                </Form>
+                            );
+                        }}
                     </Formik>
                     <div className="flex items-center justify-between mt-2">
                         <div className="text-sm">{`Back to sign in.`}</div>

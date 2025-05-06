@@ -92,7 +92,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
                             <button
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage === 1}
-                                className={`relative inline-flex items-center rounded-full px-1 py-1 text-gray-400 hover:bg-secondary/20 focus:z-20 focus:outline-offset-0 ${
+                                className={`relative inline-flex items-center rounded-full px-1 py-1 text-primaryDark hover:bg-primary/20 hover:text-primary focus:z-20 focus:outline-offset-0 ${
                                     currentPage === 1
                                         ? 'cursor-not-allowed opacity-50'
                                         : 'cursor-pointer'
@@ -109,8 +109,8 @@ const PaginationComponent: React.FC<PaginationProps> = ({
                                         onClick={() => handlePageChange(page)}
                                         className={`relative cursor-pointer inline-flex rounded-full items-center px-3 py-2 text-sm font-semibold focus:z-20 focus:outline-offset-0 ${
                                             currentPage === page
-                                                ? 'bg-secondary text-white ring-secondary'
-                                                : 'text-secondaryDark hover:bg-secondary/20 hover:text-secondary'
+                                                ? 'bg-primary text-white ring-primary'
+                                                : 'text-primaryDark hover:bg-primary/20 hover:text-primary'
                                         }`}
                                     >
                                         {page}
@@ -129,7 +129,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
                             <button
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage === totalPages}
-                                className={`relative inline-flex items-center rounded-full px-1 py-1 text-gray-400 hover:bg-secondary/20 focus:z-20 focus:outline-offset-0 ${
+                                className={`relative inline-flex items-center rounded-full px-1 py-1 text-primaryDark hover:bg-primary/20 hover:text-primary focus:z-20 focus:outline-offset-0 ${
                                     currentPage === totalPages
                                         ? 'cursor-not-allowed opacity-50'
                                         : 'cursor-pointer'

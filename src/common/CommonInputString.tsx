@@ -16,7 +16,7 @@ const CommonInputField: React.FC<CommonInputFieldProps> = ({
     onFocus,
     onBlur
 }) => {
-    const { placeholder, id, name, disabled, defaultValue, type } = inputAttributes;
+    const { placeholder, id, name, disabled, type, value } = inputAttributes;
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -27,7 +27,7 @@ const CommonInputField: React.FC<CommonInputFieldProps> = ({
                 type={type === 'password' ? (showPassword ? 'text' : 'password') : type || 'text'}
                 disabled={disabled}
                 spellCheck={false}
-                defaultValue={defaultValue}
+                value={value}
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}

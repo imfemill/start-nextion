@@ -1,35 +1,34 @@
 import { serverApi } from '@/store/serverApi';
 
-export const authApi = serverApi.enhanceEndpoints({ addTagTypes: ['User'] }).injectEndpoints({
-    endpoints: (builder) => ({
-        postUserSignInData: builder.mutation({
-            query: (values) => ({
-                url: '/login',
-                method: 'POST',
-                body: values
+export const authApi = serverApi
+    .enhanceEndpoints({ addTagTypes: ['CurrentUser'] })
+    .injectEndpoints({
+        endpoints: (builder) => ({
+            userLogin: builder.mutation({
+                query: (values) => ({
+                    url: '/login',
+                    method: 'POST',
+                    body: values
+                }),
+                invalidatesTags: ['CurrentUser']
             }),
-            invalidatesTags: ['User']
-        }),
-        postUserSignUpData: builder.mutation({
-            query: (data) => ({
-                url: '/register',
-                method: 'POST',
-                body: data
+            userRegister: builder.mutation({
+                query: (data) => ({
+                    url: '/register',
+                    method: 'POST',
+                    body: data
+                })
+            }),
+            userForgotPassword: builder.mutation({
+                query: (data) => ({
+                    url: '/forgot-password',
+                    method: 'POST',
+                    body: data
+                })
             })
         }),
-        postForgetPasswordData: builder.mutation({
-            query: (data) => ({
-                url: '/forgot-password',
-                method: 'POST',
-                body: data
-            })
-        })
-    }),
-    overrideExisting: false
-});
+        overrideExisting: false
+    });
 
-export const {
-    usePostForgetPasswordDataMutation,
-    usePostUserSignUpDataMutation,
-    usePostUserSignInDataMutation
-} = authApi;
+export const { useUserLoginMutation, useUserRegisterMutation, useUserForgotPasswordMutation } =
+    authApi;

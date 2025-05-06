@@ -9,6 +9,9 @@ import 'swiper/css/pagination';
 
 import { ConfigProvider } from 'antd';
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
+import Head from 'next/head';
+import Context from '@/store/context/context';
 
 export const dynamic = 'auto';
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
@@ -20,6 +23,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning={true} dir="ltr">
+            <Head>
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
             <body className={`antialiased`} cz-shortcut-listen="true">
                 <ConfigProvider
                     theme={{
@@ -29,7 +36,11 @@ export default function RootLayout({
                     }}
                 >
                     <AntdRegistry>
-                        <ReduxProvider>{children}</ReduxProvider>
+                        <ReduxProvider>
+                            <Context />
+                            {children}
+                            <Toaster position="top-center" />
+                        </ReduxProvider>
                     </AntdRegistry>
                 </ConfigProvider>
             </body>

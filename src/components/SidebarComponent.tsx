@@ -1,7 +1,13 @@
 'use client';
 
 import { sidebarStructure } from '@/routes/structure';
-import { ChevronLeftIcon, ChevronRightIcon, ComponentIcon, HomeIcon } from 'lucide-react';
+import {
+    BookTypeIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ComponentIcon,
+    HomeIcon
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -20,6 +26,7 @@ interface SidebarItem {
     icon?: string;
     link?: string;
     parent?: boolean;
+    nested?: boolean;
     child?: SidebarItem[];
 }
 
@@ -42,6 +49,9 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
                 if (item.link === pathname) {
                     return item.name;
                 }
+                if (item?.nested) {
+                    return item.name;
+                }
                 if (item.child) {
                     const activeChild = findActiveItem(item.child);
                     if (activeChild) {
@@ -55,6 +65,8 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         const activeItemName = findActiveItem(sidebarStructure);
         if (activeItemName) {
             setActiveName(activeItemName);
+        } else {
+            setActiveName('');
         }
     }, [pathname]); // Run this effect whenever the pathname changes
 
@@ -79,7 +91,8 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
     const generateIcon = (icon: string) => {
         const iconsMap: Record<string, JSX.Element> = {
             dashboard: <HomeIcon size={16} />,
-            components: <ComponentIcon size={16} />
+            components: <ComponentIcon size={16} />,
+            blog: <BookTypeIcon size={16} />
         };
         return iconsMap[icon] || null;
     };

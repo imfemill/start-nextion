@@ -53,6 +53,15 @@ const sidebarStructure = [
                 icon: 'dot'
             }
         ]
+    },
+    {
+        id: 'blog',
+        title: 'Blog',
+        name: 'blog',
+        parent: true,
+        icon: 'blog',
+        link: '/blog',
+        nested: true
     }
 ];
 

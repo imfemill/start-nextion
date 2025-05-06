@@ -8,7 +8,9 @@ interface CommonButtonProps {
     variant?: typeof PRIMARY | typeof OUTLINED;
     rounded?: boolean;
     soft?: boolean;
+    disabled?: boolean;
     buttonType?: 'button' | 'submit';
+    handleClick?: () => void;
 }
 
 const CommonButton: React.FC<CommonButtonProps> = ({
@@ -17,7 +19,9 @@ const CommonButton: React.FC<CommonButtonProps> = ({
     type = PRIMARY,
     variant = PRIMARY,
     rounded = false,
-    soft = false
+    soft = false,
+    disabled = false,
+    handleClick = () => {}
 }) => {
     const getButtonStyle = () => {
         if (variant === PRIMARY) {
@@ -37,9 +41,12 @@ const CommonButton: React.FC<CommonButtonProps> = ({
     return (
         <button
             type={buttonType}
-            className={`${getButtonStyle()} duration-400 w-full text-sm font-semibold cursor-pointer px-3.5 py-1.5 ${
+            className={`${getButtonStyle()} duration-400 w-full text-sm font-semibold px-3.5 py-1.5 ${
                 rounded ? 'rounded-full' : 'rounded-sm'
-            }`}
+            } ${disabled ? 'opacity-90 cursor-not-allowed' : 'cursor-pointer'}`}
+            disabled={disabled}
+            aria-disabled={disabled}
+            onClick={!disabled ? handleClick : undefined}
         >
             {children}
         </button>

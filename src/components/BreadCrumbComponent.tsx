@@ -5,8 +5,17 @@ import { HouseIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+interface RootState {
+    pageInfo: {
+        title?: string;
+    };
+}
 
 const BreadCrumbComponent: React.FC = () => {
+    // Access the pageInfo from the Redux store
+    const pageInfo = useSelector((state: RootState) => state.pageInfo);
     const pathname = usePathname();
 
     // Function to generate breadcrumb items dynamically
@@ -20,7 +29,9 @@ const BreadCrumbComponent: React.FC = () => {
                 href: isLast ? undefined : href, // Only add href for non-last segments
                 title: (
                     <span className="flex items-center gap-2">
-                        {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                        {isLast && pageInfo?.title
+                            ? pageInfo?.title
+                            : segment.charAt(0).toUpperCase() + segment.slice(1)}
                     </span>
                 )
             };
@@ -29,7 +40,6 @@ const BreadCrumbComponent: React.FC = () => {
         // Add the home icon as the first breadcrumb item
         return [
             {
-                href: undefined,
                 title: (
                     <Link href={'/dashboard'}>
                         <HouseIcon className="cursor-pointer mt-[2px]" size={16} strokeWidth={1} />

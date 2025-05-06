@@ -1,25 +1,100 @@
 'use client';
 
 // import required modules
+import { deleteCookie, getCookie, setCookie } from 'cookies-next/client';
+import CryptoJS from 'crypto-js';
+import { Form, Formik } from 'formik';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { setCookie } from 'cookies-next/client';
-import { Form, Formik } from 'formik';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Components and Constants
-import { PRIMARY } from '@/lib/constants';
 import CommonButton from '@/common/CommonButton';
-import CommonTextLink from '@/common/CommonTextLink';
+import CommonButtonLoader from '@/common/CommonButtonLoader';
 import CommonCheckbox from '@/common/CommonCheckbox';
+import CommonFieldError from '@/common/CommonFieldError';
 import CommonInputField from '@/common/CommonInputString';
+import CommonTextLink from '@/common/CommonTextLink';
+import { PRIMARY } from '@/lib/constants';
+import { successToast } from '@/lib/toast';
+import { useUserLoginMutation } from '@/store/services/auth/authApi';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginSchema } from '../_schemas/loginSchemas';
+import { setCurrentUser } from '@/store/context/userSlice';
 
 const Login = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
+    const [userLogin, { isLoading }] = useUserLoginMutation();
+    const signin_secret = process.env.NEXT_PUBLIC_SIGNIN_REMEMBER_ME_SECRET;
+
+    // Function to encrypt data
+    const encryptData = (data: string): string => {
+        if (!signin_secret) {
+            throw new Error('Encryption secret is not defined');
+        }
+        return CryptoJS.AES.encrypt(data, signin_secret).toString();
+    };
+
+    if (!signin_secret) {
+        throw new Error('Decryption secret is not defined');
+    }
+
+    // Function to decrypt data
+    const decryptData = (data: string): string => {
+        const bytes = CryptoJS.AES.decrypt(data, signin_secret);
+        return bytes.toString(CryptoJS.enc.Utf8);
+    };
+
+    // Retrieve saved credentials from localStorage using custom hook
+    const storedEmail = getCookie('email');
+    const storedPassword = getCookie('password');
+
+    const getSavedCredentials = () => {
+        if (storedEmail && storedPassword) {
+            const decryptedEmail = decryptData(storedEmail);
+            const decryptedPassword = decryptData(storedPassword);
+            return { email: decryptedEmail, password: decryptedPassword };
+        }
+        return null;
+    };
+
+    const credentials = getSavedCredentials();
+
+    // State to manage "Remember me" checkbox
+    const [isChecked, setIsChecked] = useState<boolean>(!!(storedEmail && storedPassword));
+
+    const handleSubmit = async (values: { email: string; password: string }) => {
+        const { email, password } = values;
+        userLogin({
+            email: values?.email,
+            password: values?.password
+        }).then((result) => {
+            if ('data' in result) {
+                const { data } = result;
+                dispatch(setCurrentUser(data));
+                setCookie('master-key', email);
+
+                if (isChecked) {
+                    const encryptedEmail = encryptData(email);
+                    const encryptedPassword = encryptData(password);
+                    setCookie('email', encryptedEmail);
+                    setCookie('password', encryptedPassword);
+                } else {
+                    deleteCookie('email');
+                    deleteCookie('password');
+                }
+
+                successToast('Login Successfully'); // Call the toast notification here
+                router.push('/dashboard');
+            }
+        });
+    };
     return (
         <section>
-            <div className="md:max-w-4xl w-full flex flex-col flex-wrap md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-neutral-200 rounded-xs bg-white shadow-[0px_2px_30px_#ccc6]">
+            <div className="md:max-w-4xl w-full flex flex-col flex-wrap md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-neutral-200 rounded-xs bg-white shadow-[0px_2px_30px_#ccc6] h-[35rem]">
                 {/* Left Section */}
                 <div className="w-full md:w-7/12 p-6 md:p-10">
                     <Image
@@ -35,87 +110,115 @@ const Login = () => {
                         Access your all-in-one business solution.
                     </p>
                     <Formik
-                        initialValues={{ email: '', password: '' }}
-                        onSubmit={(values) => {
-                            console.warn(values);
-                            setCookie('master-key', values.email);
-                            router.push('/dashboard');
+                        enableReinitialize={true}
+                        initialValues={{
+                            email: credentials?.email || '',
+                            password: credentials?.password || ''
                         }}
+                        onSubmit={(values) => {
+                            handleSubmit(values);
+                        }}
+                        validationSchema={loginSchema}
                     >
-                        {({ handleSubmit, handleChange, handleBlur }) => (
-                            <Form onSubmit={handleSubmit} noValidate>
-                                <div className="space-y-4">
-                                    <div>
-                                        <label
-                                            htmlFor="email"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Email
-                                        </label>
-                                        <CommonInputField
-                                            inputAttributes={{
-                                                placeholder: 'Enter your text here',
-                                                id: 'email',
-                                                name: 'email',
-                                                disabled: false,
-                                                defaultValue: ''
-                                            }}
-                                            onChange={handleChange}
-                                            onFocus={() => {}}
-                                            onBlur={handleBlur}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label
-                                            htmlFor="password"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Password
-                                        </label>
-                                        <CommonInputField
-                                            inputAttributes={{
-                                                placeholder: 'Enter your password here',
-                                                id: 'password',
-                                                name: 'password',
-                                                type: 'password',
-                                                disabled: false,
-                                                defaultValue: ''
-                                            }}
-                                            onChange={handleChange}
-                                            onFocus={() => {}}
-                                            onBlur={handleBlur}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-between mt-6">
-                                    <div className="flex items-center">
-                                        <CommonCheckbox
-                                            options={[
-                                                {
-                                                    id: 'forgot-password',
-                                                    value: 'forgot-password',
-                                                    label: 'Remember me',
+                        {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => {
+                            return (
+                                <Form onSubmit={handleSubmit} noValidate>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label
+                                                htmlFor="email"
+                                                className="block text-sm font-medium text-gray-700"
+                                            >
+                                                Email
+                                            </label>
+                                            <CommonInputField
+                                                inputAttributes={{
+                                                    placeholder: 'Enter your text here',
+                                                    id: 'email',
+                                                    name: 'email',
                                                     disabled: false,
-                                                    checked: true
-                                                }
-                                            ]}
-                                            name="radio-button"
-                                            onChange={(/* e */) => {}}
-                                        />
+                                                    value: values?.email
+                                                }}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                onFocus={() => {}}
+                                            />
+                                            {
+                                                <CommonFieldError
+                                                    errorText={errors?.email || ''}
+                                                    isError={
+                                                        (errors?.email && touched?.email) || false
+                                                    }
+                                                />
+                                            }
+                                        </div>
+                                        <div>
+                                            <label
+                                                htmlFor="password"
+                                                className="block text-sm font-medium text-gray-700"
+                                            >
+                                                Password
+                                            </label>
+                                            <CommonInputField
+                                                inputAttributes={{
+                                                    placeholder: 'Enter your password here',
+                                                    id: 'password',
+                                                    name: 'password',
+                                                    type: 'password',
+                                                    disabled: false,
+                                                    value: values?.password
+                                                }}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                onFocus={() => {}}
+                                            />
+                                            {
+                                                <CommonFieldError
+                                                    errorText={errors?.password || ''}
+                                                    isError={
+                                                        (errors?.password && touched?.password) ||
+                                                        false
+                                                    }
+                                                />
+                                            }
+                                        </div>
                                     </div>
-                                    <div className="text-sm">
-                                        <CommonTextLink href="/forgot-password">
-                                            Forgot your password?
-                                        </CommonTextLink>
+                                    <div className="flex items-center justify-between mt-6">
+                                        <div className="flex items-center">
+                                            <CommonCheckbox
+                                                options={[
+                                                    {
+                                                        id: 'rememberMe',
+                                                        value: 'rememberMe',
+                                                        label: 'Remember me',
+                                                        disabled: false,
+                                                        checked: isChecked
+                                                    }
+                                                ]}
+                                                name="radio-button"
+                                                onChange={(e) => {
+                                                    setIsChecked(e.target.checked);
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="text-sm">
+                                            <CommonTextLink href="/forgot-password">
+                                                Forgot your password?
+                                            </CommonTextLink>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="w-full">
-                                    <CommonButton type={PRIMARY} buttonType="submit">
-                                        Sign In
-                                    </CommonButton>
-                                </div>
-                            </Form>
-                        )}
+                                    <div className="w-full">
+                                        <CommonButton
+                                            type={PRIMARY}
+                                            buttonType="submit"
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading ? <CommonButtonLoader /> : 'Sign In'}
+                                        </CommonButton>
+                                    </div>
+                                </Form>
+                            );
+                        }}
                     </Formik>
                     <div className="flex items-center justify-between mt-2">
                         <div className="text-sm">{`Don't have an account?`}</div>

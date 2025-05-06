@@ -3,11 +3,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { serverApi } from './serverApi';
-import { userSlice } from './services/routes/users/userSlice';
+import { userSlice } from './context/userSlice';
+import { currentPageTitleSlice } from './context/currentPageTitleSlice';
 
 const appReducer = combineReducers({
     [serverApi.reducerPath]: serverApi.reducer,
-    userInfo: userSlice.reducer
+    userInfo: userSlice.reducer,
+    pageInfo: currentPageTitleSlice.reducer
 });
 
 const rootReducer = (

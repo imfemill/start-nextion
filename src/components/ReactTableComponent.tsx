@@ -1,11 +1,11 @@
 'use client';
 
-import { useTable } from 'react-table';
-import React, { useEffect, useState } from 'react';
 import { ASC, DESC } from '@/lib/constants';
+import React, { useEffect, useState } from 'react';
+import { useTable } from 'react-table';
 
 interface ReactTableComponentProps {
-    columns: Array<{ Header: string; accessor: string; sortable?: boolean }>; // Table column definitions
+    columns: Array<{ Header: string; accessor: string; sortable?: boolean; align?: string }>; // Table column definitions
     data: Array<Record<string, string | number | boolean | null>>; // Table data
     handleSort: (columnId: string, order: typeof ASC | typeof DESC | '') => void; // Function to handle sorting
     orderBy: typeof ASC | typeof DESC | ''; // Sorting order
@@ -74,9 +74,16 @@ const ReactTableComponent: React.FC<ReactTableComponentProps> = ({
                                         })
                                     }
                                     key={new Date().getTime() + index}
-                                    className={`px-6 text-left text-xs font-bold text-neutral-800 uppercase tracking-wider select-none py-4 ${sortingFields?.includes(column?.id) && 'cursor-pointer'}`}
+                                    className={`px-6 text-${columns[index]?.align || 'left'} text-xs font-bold text-neutral-800 uppercase tracking-wider select-none py-4 ${sortingFields?.includes(column?.id) && 'cursor-pointer'}`}
+                                    title={
+                                        sortingFields?.includes(column?.id)
+                                            ? `Sort By ${column.render('Header')}`
+                                            : ''
+                                    }
                                 >
-                                    <div className="flex items-center">
+                                    <div
+                                        className={`flex ${columns[index]?.align === 'center' ? 'justify-center' : 'justify-start'} items-center`}
+                                    >
                                         {column.render('Header')}
                                         {/* Add sorting indicators */}
                                         {sortingFields?.includes(column?.id) &&
@@ -103,7 +110,7 @@ const ReactTableComponent: React.FC<ReactTableComponentProps> = ({
                                     <td
                                         {...cell.getCellProps()}
                                         key={cell.column.id}
-                                        className="px-6 py-4 text-sm text-neutral-700 break-words"
+                                        className={`px-6 py-4 text-sm text-neutral-700 break-words text-${columns.find((col) => col.accessor === cell.column.id)?.align || 'left'} max-w-[150px]`}
                                     >
                                         {cell.render('Cell')}
                                     </td>

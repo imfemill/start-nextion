@@ -1,3 +1,5 @@
+import { errorToast } from './toast';
+
 // Check if a value is an array
 export const isArray = (value: unknown): boolean => {
     return Array.isArray(value);
@@ -16,10 +18,15 @@ export const removeDuplicates = <T>(arr: T[]): T[] => {
 // Remove all cookies and clear local storage and session storage
 export const flushStorageAndCookies = (): boolean => {
     try {
-        // Remove all cookies
+        // Remove all cookies except email and password
         document.cookie.split(';').forEach((cookie) => {
             const cookieName = cookie.split('=')[0].trim();
-            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}`;
+            if (
+                !cookieName.toLowerCase().includes('email') &&
+                !cookieName.toLowerCase().includes('password')
+            ) {
+                document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}`;
+            }
         });
 
         // Clear local storage
@@ -28,8 +35,9 @@ export const flushStorageAndCookies = (): boolean => {
         // Clear session storage
         sessionStorage.clear();
 
+        errorToast('Logged out successfully');
         // Reload the page
-        window.location.reload();
+        // window.location.reload();
 
         return true;
     } catch (error) {

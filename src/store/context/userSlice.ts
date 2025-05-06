@@ -16,7 +16,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         // Reducer for updating user information
-        AddUserInfo: (state, { payload }) => {
+        setCurrentUser: (state, { payload }) => {
             state.id = payload?.userId;
             state.name = payload?.name;
             state.email = payload?.email;
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
 // Action creators are automatically generated for each case reducer function
 
 // Export the action creators
-export const { AddUserInfo } = userSlice.actions;
+export const { setCurrentUser } = userSlice.actions;
 
 // Export the user slice reducer
 export default userSlice.reducer;
