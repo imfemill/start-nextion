@@ -6,19 +6,23 @@ const capitalizeSlug = (slug: string): string => {
 };
 
 // Generate metadata dynamically based on the slug
-export async function generateMetadata({
-    params
-}: {
-    params: { slug: string };
-}): Promise<Metadata> {
-    const { slug } = params;
+type Props = {
+    params: Promise<{ slug: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    'use server';
+    // read route params
+    const { slug } = await params;
 
     return {
         title: `Blog - ${capitalizeSlug(slug)}`, // Capitalize the slug
         description: `Read the latest blog post: ${capitalizeSlug(slug)}`
     };
 }
-// app/login/layout.tsx
-export default function LoginLayout({ children }: { children: React.ReactNode }) {
+
+// Layout component
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
 }

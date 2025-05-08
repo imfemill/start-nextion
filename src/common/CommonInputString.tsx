@@ -37,7 +37,7 @@ const CommonInputField: React.FC<CommonInputFieldProps> = ({
             bg-white border border-light rounded-md focus-visible:outline-none 
             text-gray-900 text-sm rounded-input block w-full py-2 px-2.5 h-[38px] 
             placeholder:text-gray-400 focus-within:border-neutral-400
-            ${type === 'password' ? 'pe-10' : ''}
+            ${type === 'password' ? 'pe-10 select-none' : ''}
             `}
             />
             {type === 'password' && (

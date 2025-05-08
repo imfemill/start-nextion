@@ -94,7 +94,7 @@ const Login = () => {
     };
     return (
         <section>
-            <div className="md:max-w-4xl w-full flex flex-col flex-wrap md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-neutral-200 rounded-xs bg-white shadow-[0px_2px_30px_#ccc6] h-[35rem]">
+            <div className="md:max-w-4xl w-full flex flex-col flex-wrap md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-neutral-200 rounded-xs bg-white shadow-[0px_2px_30px_#ccc6]">
                 {/* Left Section */}
                 <div className="w-full md:w-7/12 p-6 md:p-10">
                     <Image

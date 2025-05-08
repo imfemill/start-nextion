@@ -5,18 +5,10 @@ export const [PRIMARY, SECONDARY, OUTLINED, ROUNDED]: string[] = [
     'ROUNDED'
 ];
 
-// Show header of page title
-export const pageTitle = {
-    '/dashboard': 'Dashboard',
-    '/profile': 'My Profile',
-    '/components/tables': 'Tables',
-    '/components/buttons': 'Buttons',
-    '/components/forms': 'Forms',
-    '/components/forms/form-elements': 'Form Elements',
-    '/components/antd': 'Ant Design'
-};
-
 export const [ASC, DESC] = ['asc', 'desc'];
+
+// Simple email regex
+export const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/;
 
 // Simple password regex: 8-20 characters of any type
 export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})/;

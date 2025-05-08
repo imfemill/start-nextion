@@ -104,7 +104,7 @@ const CommonMultipleSelection: React.FC<CommonMultipleSelectionProps> = ({
                 border: state.isFocused ? '1px solid #a1a1a1' : '1px solid #ccc'
             },
             ':active': {
-                border: state.isFocused ? '1px solid #f37438' : '1px solid #f3743890'
+                border: state.isFocused ? '1px solid #a1a1a1' : '1px solid #f3743890'
             }
         }),
         option: (provided, state) => {
@@ -138,7 +138,8 @@ const CommonMultipleSelection: React.FC<CommonMultipleSelectionProps> = ({
         }),
         multiValue: (provided, state) => ({
             ...provided,
-            backgroundColor: state.data ? 'lightgray' : '#f3743890'
+            fontWeight: 500,
+            backgroundColor: state.data ? '#cccccc70' : '#f3743890'
         })
     };
 

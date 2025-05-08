@@ -31,7 +31,12 @@ const BreadCrumbComponent: React.FC = () => {
                     <span className="flex items-center gap-2">
                         {isLast && pageInfo?.title
                             ? pageInfo?.title
-                            : segment.charAt(0).toUpperCase() + segment.slice(1)}
+                            : segment
+                                  // Capitalize the first letter of each word and join them
+                                  .replace(/-/g, ' ')
+                                  .split(' ')
+                                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                                  .join(' ')}
                     </span>
                 )
             };

@@ -1,9 +1,9 @@
-import { passwordRegex } from '@/lib/constants';
+import { emailRegex, passwordRegex } from '@/lib/constants';
 import * as yup from 'yup';
 
 export const registerSchema = yup.object().shape({
     fullname: yup.string().required('Full Name is required'),
-    email: yup.string().email('Invalid email format').required('Email is required'),
+    email: yup.string().matches(emailRegex, 'Invalid email format').required('Email is required'),
     password: yup
         .string()
         .required('Please Enter your password')

@@ -62,13 +62,13 @@ const Tables = () => {
         { name: 'Alice Johnson', age: 25, email: 'alice.johnson@example.com', status: 'Active' }
     ];
 
-    return true ? (
+    return false ? (
         <CommonTableSkeleton />
     ) : (
         <section className="selection-none mt-2">
             <div className="border border-neutral-200 rounded-[5px] shadow-xs bg-white divide-y-2 divide-neutral-200">
                 <div className="py-4 px-5 flex items-center justify-between flex-wrap gap-3">
-                    <h3 className="text-secondaryDark font-semibold">Companies List</h3>
+                    <h3 className="text-primaryDark font-semibold">Companies List</h3>
                     <div className="flex items-center flex-wrap gap-2">
                         <select
                             className="border border-neutral-200 rounded px-2 py-1 text-sm active:outline-none focus:outline-none"

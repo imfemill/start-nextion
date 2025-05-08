@@ -46,10 +46,10 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         // Set the active link based on the current pathname
         const findActiveItem = (items: SidebarItem[]): string | null => {
             for (const item of items) {
-                if (item.link === pathname) {
+                if (item?.nested && pathname.includes(item?.link ?? '')) {
                     return item.name;
                 }
-                if (item?.nested) {
+                if (item.link === pathname) {
                     return item.name;
                 }
                 if (item.child) {

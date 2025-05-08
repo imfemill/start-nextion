@@ -35,6 +35,13 @@ const sidebarStructure = [
                         name: 'components.forms.form-elements',
                         link: '/components/forms/form-elements',
                         icon: 'dot'
+                    },
+                    {
+                        id: 'sample-form',
+                        title: 'Form Sample',
+                        name: 'components.forms.form-sample',
+                        link: '/components/forms/form-sample',
+                        icon: 'dot'
                     }
                 ]
             },

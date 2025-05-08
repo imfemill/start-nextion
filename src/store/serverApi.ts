@@ -7,17 +7,29 @@ const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL + '/api'
 });
 
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+
+function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
+    return typeof error === 'object' && error !== null && 'status' in error;
+}
+
 const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
     try {
         const result = await baseQuery(args, api, extraOptions);
 
-        if (result?.error && [404].includes(result?.error?.originalStatus as number)) {
-            errorToast(`404 - Not Found. The requested resource doesn't exist.`);
+        if (result.error && isFetchBaseQueryError(result.error)) {
+            const status =
+                result.error.status === 'PARSING_ERROR' ? 'PARSING ERROR' : result.error.status;
+
+            if (status === 404) {
+                errorToast(`404 - Not Found. The requested resource doesn't exist.`);
+            }
+            if (status === 401 || status === 500) {
+                errorToast('Unauthorized or server error');
+                localStorage.clear();
+            }
         }
-        if (result?.error && [401, 500].includes(result?.error?.originalStatus as number)) {
-            errorToast('Unauthorized or server error');
-            localStorage.clear();
-        }
+
         return result;
     } catch {
         errorToast('An error occurred while fetching data');
