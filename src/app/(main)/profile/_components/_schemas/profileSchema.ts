@@ -6,7 +6,7 @@ export const profileSchema = yup.object().shape({
     lastName: yup.string().required('Last Name is required'),
     email: yup.string().matches(emailRegex, 'Invalid email format').required('Email is required'),
     phone: yup.string().required('Phone is required'),
-    address: yup.string().required('Address is required'),
+    address: yup.string().nullable(),
     address1: yup.string().required('Address1 is required'),
     address2: yup.string().required('Address2 is required'),
     city: yup.string().required('City is required'),

@@ -8,8 +8,7 @@ export const [PRIMARY, SECONDARY, OUTLINED, ROUNDED]: string[] = [
 export const [ASC, DESC] = ['asc', 'desc'];
 
 // Simple email regex
-export const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/;
-
+export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
 // Simple password regex: 8-20 characters of any type
 export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})/;
 

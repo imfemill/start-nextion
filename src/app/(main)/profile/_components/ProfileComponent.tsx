@@ -111,37 +111,40 @@ const ProfileComponent = () => {
                                                     </label>
                                                 </div>
                                                 <div className="w-full md:w-2/3">
-                                                    <CommonInputField
-                                                        inputAttributes={{
-                                                            placeholder:
-                                                                item.inputAttributes.placeholder,
-                                                            id: item.inputAttributes.id,
-                                                            name: item.inputAttributes.name,
-                                                            value: item.inputAttributes.value
-                                                        }}
-                                                        onChange={item.onChange}
-                                                        onFocus={item.onFocus}
-                                                        onBlur={item.onBlur}
-                                                    />
-                                                    <CommonFieldError
-                                                        errorText={
-                                                            errors[
-                                                                item?.inputAttributes
-                                                                    ?.id as keyof typeof errors
-                                                            ] || ''
-                                                        }
-                                                        isError={
-                                                            (errors[
-                                                                item?.inputAttributes
-                                                                    ?.id as keyof typeof errors
-                                                            ] &&
-                                                                touched[
+                                                    <div className="relative">
+                                                        <CommonInputField
+                                                            inputAttributes={{
+                                                                placeholder:
+                                                                    item.inputAttributes
+                                                                        .placeholder,
+                                                                id: item.inputAttributes.id,
+                                                                name: item.inputAttributes.name,
+                                                                value: item.inputAttributes.value
+                                                            }}
+                                                            onChange={item.onChange}
+                                                            onFocus={item.onFocus}
+                                                            onBlur={item.onBlur}
+                                                        />
+                                                        <CommonFieldError
+                                                            errorText={
+                                                                errors[
                                                                     item?.inputAttributes
-                                                                        ?.id as keyof typeof touched
-                                                                ]) ||
-                                                            false
-                                                        }
-                                                    />
+                                                                        ?.id as keyof typeof errors
+                                                                ] || ''
+                                                            }
+                                                            isError={
+                                                                (errors[
+                                                                    item?.inputAttributes
+                                                                        ?.id as keyof typeof errors
+                                                                ] &&
+                                                                    touched[
+                                                                        item?.inputAttributes
+                                                                            ?.id as keyof typeof touched
+                                                                    ]) ||
+                                                                false
+                                                            }
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         );
@@ -158,21 +161,31 @@ const ProfileComponent = () => {
                                             <div className="w-full md:w-1/6">
                                                 <label
                                                     className="block text-sm font-semibold text-neutral-700"
-                                                    htmlFor="fullAddress"
+                                                    htmlFor="address"
                                                 >
                                                     Full Address
                                                 </label>
                                             </div>
-                                            <div className="w-full md:w-5/6">
-                                                <GoogleAddressSearch
-                                                    placeholder={'Full Address'}
-                                                    id={'fullAddress'}
-                                                    name={'fullAddress'}
-                                                    values={''}
-                                                    resetValue={() => {}}
-                                                    handleChange={() => {}}
-                                                    handleBlur={() => {}}
-                                                />
+                                            <div className="w-full md:w-5/6 relative">
+                                                <div className="relative w-full">
+                                                    <GoogleAddressSearch
+                                                        placeholder={'Full Address'}
+                                                        id={'address'}
+                                                        name={'address'}
+                                                        values={values?.address}
+                                                        resetValue={() => {}}
+                                                        handleChange={() => {}}
+                                                        handleBlur={() => {}}
+                                                    />
+                                                    <CommonFieldError
+                                                        errorText={errors['address'] || ''}
+                                                        isError={
+                                                            (errors['address'] &&
+                                                                touched['address']) ||
+                                                            false
+                                                        }
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -264,37 +277,40 @@ const ProfileComponent = () => {
                                                     </label>
                                                 </div>
                                                 <div className="w-full md:w-2/3">
-                                                    <CommonInputField
-                                                        inputAttributes={{
-                                                            placeholder:
-                                                                item.inputAttributes.placeholder,
-                                                            id: item.inputAttributes.id,
-                                                            name: item.inputAttributes.name,
-                                                            value: item.inputAttributes.value
-                                                        }}
-                                                        onChange={item.onChange}
-                                                        onFocus={item.onFocus}
-                                                        onBlur={item.onBlur}
-                                                    />
-                                                    <CommonFieldError
-                                                        errorText={
-                                                            errors[
-                                                                item?.inputAttributes
-                                                                    ?.id as keyof typeof errors
-                                                            ] || ''
-                                                        }
-                                                        isError={
-                                                            (errors[
-                                                                item?.inputAttributes
-                                                                    ?.id as keyof typeof errors
-                                                            ] &&
-                                                                touched[
+                                                    <div className="relative">
+                                                        <CommonInputField
+                                                            inputAttributes={{
+                                                                placeholder:
+                                                                    item.inputAttributes
+                                                                        .placeholder,
+                                                                id: item.inputAttributes.id,
+                                                                name: item.inputAttributes.name,
+                                                                value: item.inputAttributes.value
+                                                            }}
+                                                            onChange={item.onChange}
+                                                            onFocus={item.onFocus}
+                                                            onBlur={item.onBlur}
+                                                        />
+                                                        <CommonFieldError
+                                                            errorText={
+                                                                errors[
                                                                     item?.inputAttributes
-                                                                        ?.id as keyof typeof touched
-                                                                ]) ||
-                                                            false
-                                                        }
-                                                    />
+                                                                        ?.id as keyof typeof errors
+                                                                ] || ''
+                                                            }
+                                                            isError={
+                                                                (errors[
+                                                                    item?.inputAttributes
+                                                                        ?.id as keyof typeof errors
+                                                                ] &&
+                                                                    touched[
+                                                                        item?.inputAttributes
+                                                                            ?.id as keyof typeof touched
+                                                                    ]) ||
+                                                                false
+                                                            }
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}
