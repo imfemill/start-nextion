@@ -1,8 +1,8 @@
 'use client';
 
 import { Provider } from 'react-redux';
-import { rtkStore } from './store';
 import { ReactNode } from 'react';
+import { rtkStore } from '@/store/store';
 
 interface Props {
     children: ReactNode;

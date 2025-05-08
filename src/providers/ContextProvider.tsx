@@ -2,11 +2,11 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { setCurrentUser } from './userSlice';
-import { useLazyGetUserDataQuery } from '../services/routes/users/userApi';
 import { getCookie } from 'cookies-next/client';
+import { useLazyGetUserDataQuery } from '@/store/services/routes/users/userApi';
+import { setCurrentUser } from '@/store/context/userSlice';
 
-const Context = () => {
+const ContextProvider = () => {
     const dispatch = useDispatch();
 
     // Retrieve user information from the Redux store
@@ -48,4 +48,4 @@ const Context = () => {
     return <></>;
 };
 
-export default Context;
+export default ContextProvider;
