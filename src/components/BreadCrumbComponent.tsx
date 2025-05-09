@@ -47,41 +47,41 @@ const BreadCrumbComponent: React.FC<BreadCrumbProps> = ({ items }) => {
                     </Link>
                 )
             },
-            {
-                title: 'Nested Menu',
-                menu: {
-                    items: [
-                        {
-                            key: '1',
-                            label: <Link href={'/components/buttons'}>Dashboard</Link>
-                        },
-                        {
-                            key: '2',
-                            label: (
-                                <Link href={'/dashboard'}>
-                                    <HouseIcon
-                                        className="cursor-pointer mt-[2px]"
-                                        size={16}
-                                        strokeWidth={1}
-                                    />
-                                </Link>
-                            )
-                        },
-                        {
-                            key: '3',
-                            label: (
-                                <Link href={'/dashboard'}>
-                                    <HouseIcon
-                                        className="cursor-pointer mt-[2px]"
-                                        size={16}
-                                        strokeWidth={1}
-                                    />
-                                </Link>
-                            )
-                        }
-                    ]
-                }
-            },
+            // {
+            //     title: 'Nested Menu',
+            //     menu: {
+            //         items: [
+            //             {
+            //                 key: '1',
+            //                 label: <Link href={'/components/buttons'}>Dashboard</Link>
+            //             },
+            //             {
+            //                 key: '2',
+            //                 label: (
+            //                     <Link href={'/dashboard'}>
+            //                         <HouseIcon
+            //                             className="cursor-pointer mt-[2px]"
+            //                             size={16}
+            //                             strokeWidth={1}
+            //                         />
+            //                     </Link>
+            //                 )
+            //             },
+            //             {
+            //                 key: '3',
+            //                 label: (
+            //                     <Link href={'/dashboard'}>
+            //                         <HouseIcon
+            //                             className="cursor-pointer mt-[2px]"
+            //                             size={16}
+            //                             strokeWidth={1}
+            //                         />
+            //                     </Link>
+            //                 )
+            //             }
+            //         ]
+            //     }
+            // },
             ...items
         ];
     };
