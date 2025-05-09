@@ -6,6 +6,8 @@ import ContextProvider from '@/providers/ContextProvider';
 import ReduxProvider from '@/providers/ReduxProvider';
 import { Toaster } from 'react-hot-toast';
 
+import NextTopLoader from 'nextjs-toploader';
+
 // your Tailwind CSS
 import '@/styles/globals.css';
 
@@ -31,6 +33,17 @@ export default function RootLayout({
                 <AntdProvider>
                     <ReduxProvider>
                         <ContextProvider />
+                        <NextTopLoader
+                            initialPosition={0.08}
+                            crawlSpeed={200}
+                            height={3.5}
+                            crawl={true}
+                            easing="ease"
+                            speed={200}
+                            shadow="0 0 10px #de500d,0 0 5px #de500d"
+                            color="#de500d"
+                            showSpinner={false}
+                        />
                         {children}
                         <Toaster position="top-center" />
                     </ReduxProvider>
