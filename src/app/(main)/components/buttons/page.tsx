@@ -1,7 +1,8 @@
-import CommonButton from '@/common/CommonButton';
-import LayoutTitleComponent from '@/components/LayoutTitleComponent';
-import { PRIMARY, SECONDARY, OUTLINED } from '@/lib/constants';
 import React from 'react';
+const CommonButton = dynamic(() => import('@/common/CommonButton'));
+const LayoutTitleComponent = dynamic(() => import('@/components/LayoutTitleComponent'));
+import { PRIMARY, SECONDARY, OUTLINED } from '@/lib/constants';
+import dynamic from 'next/dynamic';
 
 const Buttons = () => {
     return (

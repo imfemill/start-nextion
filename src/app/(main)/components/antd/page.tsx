@@ -1,9 +1,13 @@
 'use client';
 
-import CommonDatePicker from '@/common/CommonDatePicker';
-import CommonDateRangePicker from '@/common/CommonDateRangePicker';
-import CommonSwitchableDateTimePicker from '@/common/CommonSwitchableDateTimePicker';
-import LayoutTitleComponent from '@/components/LayoutTitleComponent';
+import dynamic from 'next/dynamic';
+
+const CommonDatePicker = dynamic(() => import('@/common/CommonDatePicker'));
+const CommonDateRangePicker = dynamic(() => import('@/common/CommonDateRangePicker'));
+const CommonSwitchableDateTimePicker = dynamic(
+    () => import('@/common/CommonSwitchableDateTimePicker')
+);
+const LayoutTitleComponent = dynamic(() => import('@/components/LayoutTitleComponent'));
 
 // import "antd/dist/reset.css"; // antd css
 

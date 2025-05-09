@@ -1,12 +1,14 @@
 'use client';
 
-import CommonSearchInput from '@/common/CommonSearchInput';
-import CommonTableSkeleton from '@/common/CommonTableSkeleton';
-import LayoutTitleComponent from '@/components/LayoutTitleComponent';
-import PaginationComponent from '@/components/PaginationComponent';
-import ReactTableComponent from '@/components/ReactTableComponent';
-import MoreText from '@/components/ViewMoreComponent';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
+
+const CommonSearchInput = dynamic(() => import('@/common/CommonSearchInput'));
+const CommonTableSkeleton = dynamic(() => import('@/common/CommonTableSkeleton'));
+const LayoutTitleComponent = dynamic(() => import('@/components/LayoutTitleComponent'));
+const PaginationComponent = dynamic(() => import('@/components/PaginationComponent'));
+const ReactTableComponent = dynamic(() => import('@/components/ReactTableComponent'));
+const MoreText = dynamic(() => import('@/components/ViewMoreComponent'));
 
 const Tables = () => {
     const [filter, setFilter] = useState({

@@ -1,13 +1,15 @@
-import CommonButton from '@/common/CommonButton';
-import CommonFieldError from '@/common/CommonFieldError';
-import GoogleAddressSearch from '@/common/CommonGoogleAddressSuggest';
-import CommonInputField from '@/common/CommonInputString';
 import { PRIMARY } from '@/lib/constants';
 import { successToast } from '@/lib/toast';
 import { Form } from 'antd';
 import { Formik } from 'formik';
 import React from 'react';
 import { profileSchema } from './_schemas/profileSchema';
+import dynamic from 'next/dynamic';
+
+const CommonButton = dynamic(() => import('@/common/CommonButton'));
+const CommonFieldError = dynamic(() => import('@/common/CommonFieldError'));
+const GoogleAddressSearch = dynamic(() => import('@/common/CommonGoogleAddressSuggest'));
+const CommonInputField = dynamic(() => import('@/common/CommonInputString'));
 
 const ProfileComponent = () => {
     return (

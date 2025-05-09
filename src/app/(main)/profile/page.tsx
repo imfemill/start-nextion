@@ -1,8 +1,10 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
 import ProfileComponent from './_components/ProfileComponent';
 import ChangePasswordComponent from './_components/ChangePasswordComponent';
-import LayoutTitleComponent from '@/components/LayoutTitleComponent';
+const LayoutTitleComponent = dynamic(() => import('@/components/LayoutTitleComponent'));
 
 const Profile = () => {
     return (

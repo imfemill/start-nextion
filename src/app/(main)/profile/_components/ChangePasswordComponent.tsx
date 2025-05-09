@@ -1,10 +1,12 @@
 import { Form, Formik } from 'formik';
 import { PRIMARY } from '@/lib/constants';
 import { successToast } from '@/lib/toast';
-import CommonButton from '@/common/CommonButton';
-import CommonInputField from '@/common/CommonInputString';
 import { changePasswordSchema } from './_schemas/changePasswordSchema';
-import CommonFieldError from '@/common/CommonFieldError';
+import dynamic from 'next/dynamic';
+
+const CommonButton = dynamic(() => import('@/common/CommonButton'));
+const CommonInputField = dynamic(() => import('@/common/CommonInputString'));
+const CommonFieldError = dynamic(() => import('@/common/CommonFieldError'));
 
 const ChangePasswordComponent = () => {
     return (
