@@ -120,7 +120,7 @@ export const getAddressComponents = (
         formatted_address: formatted_address || ''
     };
 
-    // Initialize levels object to store different sublocality levels
+    // Initialize levels object to store different sub locality levels
     const levels: Levels = {
         level_1: '',
         level_2: '',

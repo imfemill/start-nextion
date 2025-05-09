@@ -32,7 +32,15 @@ const ProfileComponent = () => {
                 }}
                 validationSchema={profileSchema}
             >
-                {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => {
+                {({
+                    handleSubmit,
+                    handleChange,
+                    handleBlur,
+                    setFieldValue,
+                    values,
+                    errors,
+                    touched
+                }) => {
                     return (
                         <Form
                             onFinish={handleSubmit}
@@ -173,9 +181,13 @@ const ProfileComponent = () => {
                                                         id={'address'}
                                                         name={'address'}
                                                         values={values?.address}
-                                                        resetValue={() => {}}
-                                                        handleChange={() => {}}
-                                                        handleBlur={() => {}}
+                                                        resetValue={() =>
+                                                            setFieldValue('address', '')
+                                                        }
+                                                        handleChange={(e) => {
+                                                            setFieldValue('address', e?.address);
+                                                        }}
+                                                        handleBlur={handleBlur}
                                                     />
                                                     <CommonFieldError
                                                         errorText={errors['address'] || ''}

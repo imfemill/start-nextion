@@ -69,6 +69,15 @@ const sidebarStructure = [
         icon: 'blog',
         link: '/blog',
         nested: true
+    },
+    {
+        id: 'markdown',
+        title: 'Markdown',
+        name: 'markdown',
+        parent: true,
+        icon: 'markdown',
+        link: '/markdown',
+        nested: true
     }
 ];
 

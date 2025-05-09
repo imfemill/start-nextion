@@ -1,4 +1,5 @@
 import { Autocomplete, Libraries, useJsApiLoader } from '@react-google-maps/api';
+import { XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 // Google Maps API key and libraries
@@ -105,8 +106,8 @@ const GoogleAddressSearch = ({
                         }}
                     />
                     {!!values?.length && (
-                        <i
-                            className="absolute text-2xl right-2 top-1/2 -translate-y-1/2 bx bx-x text-gray-700 cursor-pointer hover:scale-105 hover:text-gray-900 transition-all"
+                        <XIcon
+                            className="absolute text-2xl right-2 top-1/2 -translate-y-1/2 text-gray-700 cursor-pointer hover:scale-105 hover:text-gray-900 transition-all"
                             onClick={() => {
                                 setIsAddressSelected(false);
                                 resetValue();

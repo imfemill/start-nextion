@@ -1,8 +1,10 @@
 'use client';
 
-import HeaderComponent from '@/components/HeaderComponent';
-import SidebarComponent from '@/components/SidebarComponent';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const HeaderComponent = dynamic(() => import('@/components/HeaderComponent'));
+const SidebarComponent = dynamic(() => import('@/components/SidebarComponent'));
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const [sideMenuIsExpand, setSideMenuIsExpand] = useState(true);

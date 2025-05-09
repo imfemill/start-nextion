@@ -68,6 +68,7 @@ const Login = () => {
 
     const handleSubmit = async (values: { email: string; password: string }) => {
         const { email, password } = values;
+        setCookie('master-key', email);
         userLogin({
             email: values?.email,
             password: values?.password
