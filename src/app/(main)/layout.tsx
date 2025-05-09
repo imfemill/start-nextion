@@ -1,7 +1,6 @@
 'use client';
 
 import HeaderComponent from '@/components/HeaderComponent';
-import LayoutTitleComponent from '@/components/LayoutTitleComponent';
 import SidebarComponent from '@/components/SidebarComponent';
 import { useState } from 'react';
 
@@ -17,10 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 }`}
             >
                 <HeaderComponent />
-                <section className="p-5 pt-16">
-                    <LayoutTitleComponent />
-                    {children}
-                </section>
+                <section className="p-5 pt-16">{children}</section>
             </section>
         </main>
     );

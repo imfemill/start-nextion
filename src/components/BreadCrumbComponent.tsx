@@ -3,44 +3,40 @@
 import { Breadcrumb } from 'antd';
 import { HouseIcon } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-interface RootState {
-    pageInfo: {
-        title?: string;
-    };
+interface BreadCrumbProps {
+    items: { title: string; href?: string }[];
 }
 
-const BreadCrumbComponent: React.FC = () => {
+const BreadCrumbComponent: React.FC<BreadCrumbProps> = ({ items }) => {
     // Access the pageInfo from the Redux store
-    const pageInfo = useSelector((state: RootState) => state.pageInfo);
-    const pathname = usePathname();
+    // const pageInfo = useSelector((state: RootState) => state.pageInfo);
+    // const pathname = usePathname();
 
     // Function to generate breadcrumb items dynamically
-    const generateBreadcrumbItems = (path: string) => {
-        const pathSegments = path.split('/').filter(Boolean); // Split and remove empty segments
-        const breadcrumbItems = pathSegments.map((segment, index) => {
-            const href = '/' + pathSegments.slice(0, index + 1).join('/'); // Build the href for each segment
-            const isLast = index === pathSegments.length - 1; // Check if it's the last segment
+    const generateBreadcrumbItems = () => {
+        // const pathSegments = path.split('/').filter(Boolean); // Split and remove empty segments
+        // const breadcrumbItems = pathSegments.map((segment, index) => {
+        //     const href = '/' + pathSegments.slice(0, index + 1).join('/'); // Build the href for each segment
+        //     const isLast = index === pathSegments.length - 1; // Check if it's the last segment
 
-            return {
-                href: isLast ? undefined : href, // Only add href for non-last segments
-                title: (
-                    <span className="flex items-center gap-2">
-                        {isLast && pageInfo?.title
-                            ? pageInfo?.title
-                            : segment
-                                  // Capitalize the first letter of each word and join them
-                                  .replace(/-/g, ' ')
-                                  .split(' ')
-                                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                                  .join(' ')}
-                    </span>
-                )
-            };
-        });
+        //     return {
+        //         href: isLast ? undefined : href, // Only add href for non-last segments
+        //         title: (
+        //             <span className="flex items-center gap-2">
+        //                 {isLast && pageInfo?.title
+        //                     ? pageInfo?.title
+        //                     : segment
+        //                           // Capitalize the first letter of each word and join them
+        //                           .replace(/-/g, ' ')
+        //                           .split(' ')
+        //                           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        //                           .join(' ')}
+        //             </span>
+        //         )
+        //     };
+        // });
 
         // Add the home icon as the first breadcrumb item
         return [
@@ -51,13 +47,13 @@ const BreadCrumbComponent: React.FC = () => {
                     </Link>
                 )
             },
-            ...breadcrumbItems
+            ...items
         ];
     };
 
-    const breadcrumbItems = generateBreadcrumbItems(pathname);
+    // const breadcrumbItems = generateBreadcrumbItems();
 
-    return <Breadcrumb items={breadcrumbItems} />;
+    return <Breadcrumb items={generateBreadcrumbItems()} />;
 };
 
 export default BreadCrumbComponent;
