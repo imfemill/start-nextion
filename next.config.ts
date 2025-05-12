@@ -21,6 +21,10 @@ module.exports = withMDX(
         },
         pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
         experimental: { webpackMemoryOptimizations: true, serverSourceMaps: false },
-        productionBrowserSourceMaps: false
+        productionBrowserSourceMaps: false,
+        i18n: {
+            locales: ['en-US', 'fr-FR', 'es-ES'],
+            defaultLocale: 'en-US'
+        }
     })
 );

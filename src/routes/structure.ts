@@ -58,6 +58,13 @@ const sidebarStructure = [
                 name: 'components.tables',
                 link: '/components/tables',
                 icon: 'dot'
+            },
+            {
+                id: 'i18n',
+                title: 'i18next localization',
+                name: 'components.i18n',
+                link: '/components/i18n/en',
+                icon: 'dot'
             }
         ]
     },
