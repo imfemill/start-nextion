@@ -12,11 +12,8 @@ const Profile = () => {
             <LayoutTitleComponent
                 items={[
                     {
-                        title: 'Profile',
+                        title: 'My Profile',
                         href: '/dashboard'
-                    },
-                    {
-                        title: 'Smit'
                     }
                 ]}
                 pageTitle="Profile"

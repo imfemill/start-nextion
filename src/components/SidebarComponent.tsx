@@ -20,6 +20,7 @@ interface SidebarProps {
 }
 
 interface SidebarItem {
+    separator?: boolean;
     id: string;
     name: string;
     title: string;
@@ -46,7 +47,7 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         // Set the active link based on the current pathname
         const findActiveItem = (items: SidebarItem[]): string | null => {
             for (const item of items) {
-                if (item?.nested && pathname.includes(item?.link ?? '')) {
+                if (item?.nested && item?.link && pathname.includes(item.link)) {
                     return item.name;
                 }
                 if (item.link === pathname) {
@@ -62,14 +63,13 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
             return null;
         };
 
-        const activeItemName = findActiveItem(sidebarStructure);
+        const activeItemName = findActiveItem(sidebarStructure as SidebarItem[]);
         if (activeItemName) {
             setActiveName(activeItemName);
         } else {
             setActiveName('');
         }
     }, [pathname]); // Run this effect whenever the pathname changes
-
     const handleHoverExpand = (value: boolean) => {
         if (!isExpand) setIsExpandOnHover(value);
     };
@@ -110,11 +110,17 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
         const isActive = isItemActive(item); // Check if the current item or its children are active
         const isOpen = openedMenu[item.name]; /*  || isActive */ // Open the menu if it's active
 
-        return (
+        return item?.separator ? (
+            <li key={item.id} className="my-2 text-neutral-400 uppercase text-xs font-semibold">
+                {item?.title}
+                {/* <hr className="border-gray-200 dark:border-gray-700" /> */}
+            </li>
+        ) : (
             <li key={item.id}>
-                <div
+                <Link
+                    href={item.child ? '' : item.link || ''}
                     role="button"
-                    tabIndex={0}
+                    // tabIndex={0}
                     onClick={() =>
                         item.child ? handleToggle(item.name) : handleNavigate(item.name, item.link)
                     }
@@ -170,7 +176,7 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
                             strokeWidth={1}
                         />
                     )}
-                </div>
+                </Link>
                 {item.child && (isExpand || isExpandOnHover) && (
                     <ul
                         className={`transition-max-height overflow-hidden duration-300 ease-in-out ${
@@ -249,7 +255,7 @@ const SidebarComponent: FC<SidebarProps> = ({ setExpand }) => {
                         </div>
                         <div className="mt-3 mb-10 p-0 leading-10">
                             <ul className="list-none text-sm font-normal px-3">
-                                {sidebarStructure.map((item) => generateMenu(item))}
+                                {sidebarStructure.map((item) => generateMenu(item as SidebarItem))}
                             </ul>
                         </div>
                     </div>

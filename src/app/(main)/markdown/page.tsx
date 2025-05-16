@@ -1,7 +1,9 @@
 'use client';
 
-import LayoutTitleComponent from '@/components/LayoutTitleComponent';
-import Welcome from '@/markdown/welcome.mdx';
+import dynamic from 'next/dynamic';
+
+const Welcome = dynamic(() => import('@/markdown/welcome.mdx'));
+const LayoutTitleComponent = dynamic(() => import('@/components/LayoutTitleComponent'));
 
 export default function Page() {
     return (

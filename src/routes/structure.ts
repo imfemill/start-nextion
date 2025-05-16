@@ -1,5 +1,10 @@
 const sidebarStructure = [
     {
+        id: 'main-menu',
+        title: 'Main Menu',
+        separator: true
+    },
+    {
         id: 'dashboard',
         title: 'Dashboard',
         name: 'dashboard',
@@ -69,6 +74,11 @@ const sidebarStructure = [
         icon: 'blog',
         link: '/blog',
         nested: true
+    },
+    {
+        id: 'additional-pages',
+        title: 'Additional Pages',
+        separator: true
     },
     {
         id: 'markdown',

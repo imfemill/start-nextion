@@ -3,8 +3,8 @@ import { successToast } from '@/lib/toast';
 import { Form } from 'antd';
 import { Formik } from 'formik';
 import React from 'react';
-import { profileSchema } from './_schemas/profileSchema';
 import dynamic from 'next/dynamic';
+import { profileSchema } from './_schemas/profileSchema';
 
 const CommonButton = dynamic(() => import('@/common/CommonButton'));
 const CommonFieldError = dynamic(() => import('@/common/CommonFieldError'));
